@@ -1,13 +1,50 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+:root {
+  --bs-primary: linear-gradient(75deg, #0f9, #09f);
+  --bs-success: linear-gradient(75deg, #09f, rgb(120, 224, 224));
+  --bs-gradient: linear-gradient(75deg, #0f9, #09f);
+}
+.btn-primary {
+  background: var(--bs-pink);
+  border: none;
+}
+.btn-primary:hover {
+  background: var(--bs-teal);
+  border: none;
+}
+.float-right {
+  float: right;
+}
+
+.text-teal {
+  color: var(--bs-teal);
+}
+.text-teal:hover {
+  color: var(--bs-orange);
+}
+
+.img-table {
+  width: 130px;
+  height: 140px;
+}
+.card-clip {
+  clip-path: polygon(10px 13.63%, 94.23% 6px, 99.5% 91.89%, 46px 96.92%);
+}
+.bg-hero {
+  background: linear-gradient(75deg, #ff3b3b, #ff00bf);
+}
+.nav-link {
+  color: antiquewhite !important;
 }
