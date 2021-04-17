@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ErrorProvider from './context/useError';
 import Loading from './pages/Loading';
 
 import routes from './routes/routes';
@@ -11,11 +12,15 @@ function App() {
         <Switch>
 
           {routes.map(route => {
-            return <Route
-              path={route.path}
-              exact={route.exact}
-              component={route.component}
-            />
+            return (
+              // <ErrorProvider>
+              <Route
+                path={route.path}
+                exact={route.exact}
+                component={route.component}
+              />
+              /* </ErrorProvider> */
+            )
           })}
 
         </Switch>

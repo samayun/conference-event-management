@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 export default function Navbar() {
     const links = [
         {
-            path: '/home',
-            title: 'Home'
+            path: '/dashboard',
+            title: 'Dashboard'
         },
         {
             path: '/speakers',
@@ -48,7 +48,7 @@ export default function Navbar() {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <span class="navbar-toggler-icon"></span>
+                        <i class="fas fa-align-right"></i>
                     </button>
                     <nav class="collapse navbar-collapse" id="navbar">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -30,6 +30,7 @@ let data = [
 class Service {
     async getAll() {
         try {
+
             // let { data } = await axios.get('/services')
             return data.slice(0, 3);
             // throw new Error("Failed TO Fetch Services");

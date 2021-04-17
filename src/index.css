@@ -45,6 +45,9 @@ code {
 .bg-hero {
   background: linear-gradient(75deg, #ff3b3b, #ff00bf);
 }
+.bg-hero2 {
+  background: linear-gradient(75deg, #0f9, #09f);
+}
 .nav-link {
   color: antiquewhite !important;
 }

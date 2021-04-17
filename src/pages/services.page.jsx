@@ -1,30 +1,32 @@
 import { Suspense, useEffect, useState } from "react"
+import { useError } from "../context/useError";
 import MainAppLayout from "../Layout/MainApp.layout";
 import Service from '../services/service.service';
-import Loading from './Loading'
+// import Loading from './Loading';
+import SkeletonLoader from "./SkeletonLoader";
 
 export default function ServicesPage() {
     const [services, setServices] = useState([]);
+    const { error, renderError } = useError();
+
     const fetchData = async () => {
         try {
-            let data = await Service.getAll();
+            let data = await Service.getAll()
             setTimeout(() => {
                 setServices(data)
             }, 3000);
         } catch (error) {
-            setTimeout(() => alert(error.message), 4000)
+            renderError(error);
         }
     }
+    // eslint-disable-next-line
     useEffect(fetchData, [])
     return (
         <MainAppLayout>
             <div className="container-fluid py-3  clip bg-light animation-right fade-right">
                 <div className="container py-3">
                     <h2 className="text-teal text-center py-3">Our Main services</h2>
-                    <Suspense fallback={<h2 className="text-teal">Loading.....</h2>}>
-                        {
-                            !services.length && <Loading />
-                        }
+                    <Suspense fallback={<SkeletonLoader />}>
                         <div className="row  text-center">
                             {
                                 services.map(({ _id, icon, title, description }) => (
