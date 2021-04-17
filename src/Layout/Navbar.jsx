@@ -1,34 +1,74 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useRouteMatch } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
+import { signOut } from "../firebase";
 
 export default function Navbar() {
+    const { currentUser, setError } = useAuth();
+    const location = useLocation();
+    const url = useRouteMatch({ path: location.pathname, exact: true }).url
+
+
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+            sessionStorage.removeItem("token");
+            // No need to manually route change cz AuthContext will reset state & privateRoute will change routing
+            // history.push('/login');
+        } catch (error) {
+            setError(error.message)
+        }
+    }
     const links = [
         {
             path: '/dashboard',
-            title: 'Dashboard'
+            title: 'Dashboard',
+            condition: !!currentUser.email
         },
         {
             path: '/speakers',
-            title: 'Speakers'
+            title: 'Speakers',
+            condition: !!currentUser.email
         },
         {
             path: '/events',
-            title: 'Events'
+            title: 'Events',
+            condition: !!currentUser.email
         },
         {
             path: '/services',
-            title: 'Services'
+            title: 'Services',
+            condition: !!currentUser.email
         },
         {
             path: '/contact',
-            title: 'Contact Us'
+            title: 'Contact Us',
+            condition: true
+        },
+
+        {
+            path: "#",
+            title: "Logout",
+            icon: "fas fa-toggle-off",
+            type: 'button',
+            handler: handleSignOut,
+            condition: !!currentUser.email
+        },
+
+        {
+            path: "#",
+            title: currentUser.name && currentUser.name,
+            type: 'img',
+            condition: !!currentUser.email
         },
         {
             path: '/login',
-            title: 'Login'
+            title: 'Login',
+            condition: !currentUser.email
         },
         {
             path: '/signup',
-            title: 'Sign Up'
+            title: 'Sign Up',
+            condition: !currentUser.email
         },
     ]
 
@@ -53,17 +93,26 @@ export default function Navbar() {
                     <nav class="collapse navbar-collapse" id="navbar">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             {
-                                links.map(link => (
-                                    <li
-                                        key={link.path}
-                                        class="nav-item">
-                                        <NavLink
-                                            class="nav-link" aria-current="page"
-                                            to={link.path}>
-                                            {link.title}
-                                        </NavLink>
-                                    </li>
-                                ))
+                                links.map(link => {
+                                    return link.condition && (
+                                        <li
+                                            onClick={() => link.type === 'button' && link.handler()}
+                                            key={link.path}
+                                            class={`nav-item   ${url === link.path && 'navactive'}`}>
+                                            <NavLink
+                                                class={`nav-link`} aria-current="page"
+                                                to={link.path}>
+                                                <i className={link.icon}></i>
+                                                {
+                                                    link.type === 'img' && (
+                                                        <img src={currentUser.photoURL || '/user.png'} alt={currentUser.name} className="img-sm img-circle " />
+                                                    )
+                                                }
+                                                <strong>{link.title}</strong>
+                                            </NavLink>
+                                        </li>
+                                    )
+                                })
                             }
                         </ul>
                     </nav>

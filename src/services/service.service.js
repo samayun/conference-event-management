@@ -1,44 +1,102 @@
-// import axios from "axios"
+import axios from "./axios";
 
-
-let data = [
-    {
-        _id: 3,
-        title: 'Litrature',
-        icon: 'fa fa-book',
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quia veniam corporis! Nostrum minima totam, distinctio quibusdam error possimus veritatis consequatur blanditiis ut suscipit atque, illum maiores non ipsam mollitia?"
-    },
-    {
-        _id: 5555,
-        title: 'Technology',
-        icon: 'fa fa-book',
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quia veniam corporis! Nostrum minima totam, distinctio quibusdam error possimus veritatis consequatur blanditiis ut suscipit atque, illum maiores non ipsam mollitia?"
-    },
-    {
-        _id: 33,
-        title: 'Online Earning',
-        icon: 'fa fa-book',
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quia veniam corporis! Nostrum minima totam, distinctio quibusdam error possimus veritatis consequatur blanditiis ut suscipit atque, illum maiores non ipsam mollitia?"
-    },
-    {
-        _id: 53,
-        title: 'Online Earning',
-        icon: 'fa fa-book',
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quia veniam corporis! Nostrum minima totam, distinctio quibusdam error possimus veritatis consequatur blanditiis ut suscipit atque, illum maiores non ipsam mollitia?"
-    }
-]
 class Service {
     async getAll() {
         try {
-
-            // let { data } = await axios.get('/services')
-            return data.slice(0, 3);
-            // throw new Error("Failed TO Fetch Services");
+            let { data } = await axios.get(`/services`);
+            console.log(data);
+            return data;
         } catch (error) {
-            throw new Error("Failed TO Fetch Services");
+            throw new Error("Services fetch error");
         }
     }
+    async getSingleService(id) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios.get(`/services/${id}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            console.log(data);
+            return data;
+        } catch (error) {
+            throw new Error("Service fetch error");
+        }
+    }
+    async createService(serviceData) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios({
+                method: 'post',
+                url: `/services`,
+                data: serviceData,
+                headers: {
+                    'Content-Type': "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+        } catch (error) {
+            throw new Error("Service fetch error");
+        }
+    }
+    async editService(productId, serviceData) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios({
+                method: 'put',
+                url: `/products/${productId}`,
+                data: serviceData,
+                headers: {
+                    'Content-Type': "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return data
+        } catch (error) {
+            throw new Error("Refresh your browser or login again. Service service failed");
+        }
+    }
+
+    async deletService(id) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios.delete(`/services/${id}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            return data;
+        } catch (error) {
+            throw new Error(`error in Admin deletService`)
+        }
+    }
+
+    async createOrder(orderData) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios.post(`/orders`, {
+                data: orderData,
+                headers: {
+                    'Content-Type': "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return data
+        } catch (error) {
+            throw new Error(`error in Admin createOrder`);
+        }
+    }
+
+    async fetchOrdersByEmail(email) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios.get(`/orders/find?email=${email}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            return data;
+        } catch (error) {
+            throw new Error("Error in fetchOrdersByEmail")
+        }
+    }
+
 }
 
 // eslint-disable-next-line 
-export default new Service
+export default new Service;

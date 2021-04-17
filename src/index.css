@@ -51,3 +51,26 @@ code {
 .nav-link {
   color: antiquewhite !important;
 }
+.navactive {
+  background: #000 !important;
+}
+.navactive strong {
+  color: #fff;
+}
+.navlink:hover {
+  background: #fff !important;
+  border: 0;
+}
+
+.navlink:hover strong {
+  color: tomato;
+}
+.img-sm.img-circle {
+  width: 3rem;
+  -webkit-clip-path: circle();
+  clip-path: circle();
+  margin-right: 3px;
+}
+.navbar-nav {
+  align-items: center;
+}
