@@ -1,50 +1,58 @@
-import { Suspense, useEffect, useState } from "react"
-import { useError } from "../context/useError";
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
+import { useService } from "../context/ServiceProvider";
+
 import MainAppLayout from "../Layout/MainApp.layout";
-import Service from '../services/service.service';
-// import Loading from './Loading';
+import ErrorComponent from "./ErrorComponent";
+
 import SkeletonLoader from "./SkeletonLoader";
 
 export default function ServicesPage() {
-    const [services, setServices] = useState([]);
-    const { error, renderError } = useError();
+    const [data, setData] = useState({});
+    const { getAllServiceData, services, setServices } = useService();
 
-    const fetchData = async () => {
-        try {
-            let data = await Service.getAll()
-            setTimeout(() => {
-                setServices(data)
-            }, 3000);
-        } catch (error) {
-            renderError(error);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                console.log({ services })
+                setData({ loading: true })
+                let response = await getAllServiceData();
+                setServices(response);
+                setData({ loading: false })
+            } catch (error) {
+                setData({ error })
+            }
         }
-    }
-    // eslint-disable-next-line
-    useEffect(fetchData, [])
+        fetchData();
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <MainAppLayout>
             <div className="container-fluid py-3  clip bg-light animation-right fade-right">
                 <div className="container py-3">
-                    <h2 className="text-teal text-center py-3">Our Main services</h2>
-                    <Suspense fallback={<SkeletonLoader />}>
+                    <h2 className="text-teal text-center py-3">Our Main services   </h2>
+
+                    {data.error && <ErrorComponent error={data.error} />}
+                    {data.loading ? <SkeletonLoader /> : (
                         <div className="row  text-center">
                             {
-                                services.map(({ _id, icon, title, description }) => (
+                                services.length ? services.map(({ _id, image, name, price, description }) => (
                                     <div className="col-md-4">
                                         <div className="card-body bg-white m-1 shadow px-4 ">
-                                            <div className="icon">
-                                                <i className={icon}></i>
-                                            </div>
-                                            <img data-lazy="/logo512.png" alt="" className=" img-fluid" />
-                                            <h2 className="text-info">{title}</h2>
-                                            <p> {description.substr(0, 30)} </p>
+
+                                            <img src={image} alt={name} className=" img-fluid" />
+                                            <h2 className="text-info">{name}</h2>
+                                            <p> Reeegistration Fee : ${price} </p>
+                                            <p> {description.substr(0, 50)} </p>
+                                            <Link className="btn btn-warning" to={`/services/${_id}`}> Book Now  </Link>
                                         </div>
                                     </div>
-                                ))
+                                )) : <h3 className="text-danger"> No Service Found </h3>
                             }
-
                         </div>
-                    </Suspense>
+                    )}
+
                 </div>
             </div>
         </MainAppLayout>

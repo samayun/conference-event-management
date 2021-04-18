@@ -4,7 +4,7 @@ import { githubProvider, googleProvider, signInWithPopup } from '../firebase';
 import userObject from '../utils/userObject';
 
 export default function SocialMediaLogin() {
-    const { setCurrentUser, setError, error } = useAuth();
+    const { setCurrentUser, setError } = useAuth();
     let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };

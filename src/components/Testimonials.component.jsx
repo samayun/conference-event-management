@@ -1,44 +1,64 @@
 import { Suspense, useEffect, useState } from "react"
 import { useError } from "../context/useError";
 import SkeletonLoader from "../pages/SkeletonLoader";
-import Service from '../services/service.service';
+import ReviewDataService from '../services/review.service';
+import BeautyStars from 'beauty-stars';
+
 export default function Services() {
-    const [services, setServices] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const { renderError } = useError();
 
-    const { error, renderError } = useError();
 
-    const fetchData = async () => {
-        try {
-            let data = await Service.getAll()
-            setTimeout(() => {
-                setServices(data)
-            }, 3000);
-        } catch (error) {
-            renderError(error);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                let data = await ReviewDataService.getAll()
+                setReviews(data);
+            } catch (error) {
+                renderError(error);
+            }
         }
+        fetchData();
+
+        // eslint-disable-next-line
+    }, []);
+    const showStarIcon = rating => {
+        let stars = "";
+        for (let i = 1; i <= rating; i++) {
+            stars += <i className="fa fa-star text-warning"></i>
+        }
+        return stars;
     }
-    // eslint-disable-next-line
-    useEffect(fetchData, []);
     return (
-        <div className="container-fluid py-3  mt-5 clip bg-light animation-right fade-right">
+        <div className="container-fluid py-3  mt-5 clip bg-light animation-right fade-right" id="testimonials">
             <div className="container py-3">
                 <h2 className="text-teal text-center py-3"> Testimonials </h2>
                 {
-                    !services.length && <SkeletonLoader />
+                    !reviews.length && <SkeletonLoader />
                 }
                 <Suspense fallback={<SkeletonLoader />}>
 
                     <div className="row  text-center">
                         {
-                            services.map(service => (
+                            reviews.map(_ => (
                                 <div className="col-md-4">
-                                    <div className="card-body bg-white m-1 shadow px-4 ">
-                                        <div className="icon">
-                                            <i className={service.icon}></i>
-                                        </div>
-                                        <img src="/logo512.png" alt="" className=" img-fluid" />
-                                        <h2 className="text-info">{service.title}</h2>
-                                        <p> {service.description.substr(0, 20)} </p>
+                                    <div className="card-body m-1 shadow-md px-1 "
+                                        style={{ backgroundColor: 'rgb(238, 238, 238)' }}
+                                    >
+                                        <i className="fa fa-quotes"></i>
+                                        <strong className="text-secondary"> {_.name} <small> Says, </small> </strong>
+                                        <img src={_?.image} alt={_.name} className="img-circle img-sm img-fluid" />
+                                        <h6 className="text-info">{_.designation}</h6>
+                                        <i className="quotes"> {_.description} </i>
+
+                                        <p className="star">
+                                            <BeautyStars
+                                                maxStars={5}
+                                                size="20px"
+                                                inactiveColor="#121621"
+                                                value={_.rating / 2.5}
+                                            />
+                                        </p>
                                     </div>
                                 </div>
                             ))

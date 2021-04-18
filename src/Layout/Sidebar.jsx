@@ -8,7 +8,9 @@
 //     faUserAlt,
 // } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 import "./Sidebar.css";
 
 const toggleStyle = {
@@ -23,56 +25,84 @@ export default function Sidebar({ handleTheme, handleLogout, toggleSidebar }) {
 
     const url = useRouteMatch({ path: location.pathname, exact: true }).url;
     const isActive = (path) => path === url;
+
+    const { UserIsAdmin, currentUser } = useAuth()
+
+    useEffect(() => {
+
+    })
     const routes = [
         {
             name: "Conference Management",
             path: "/",
             icon: 'fa fa-home',
+            condition: true
+
+        },
+        {
+            path: "#",
+            title: currentUser.name && currentUser.name,
+            type: 'img',
+            condition: !!currentUser.email
         },
         {
             name: "Dashboard",
             path: "/dashboard",
             icon: 'fas fa-dice-d6',
+            condition: true
         },
         {
-            name: "Order List",
+            name: UserIsAdmin ? "Order List" : "My Orders",
             path: "/dashboard/order-list",
             icon: "fas fa-list-ol",
+            condition: true
         }, {
             name: "Make Admin",
             path: "/dashboard/make-admin",
-            icon: "fad fa-user-plus"
+            icon: "fad fa-user-plus",
+            condition: !!UserIsAdmin
         },
         {
             name: "Add a Service",
             path: "/dashboard/add-service",
             icon: "far fa-plus-square",
+            condition: UserIsAdmin
         },
 
         {
             name: "Management Service",
             path: "/dashboard/manage-services",
             icon: "fas fa-list-ul",
+            condition: UserIsAdmin
         },
 
         {
-            name: "Review",
+            name: "Create Review",
+            path: "/dashboard/create-review",
+            icon: "far fa-star text-warning",
+            condition: !UserIsAdmin
+        },
+        {
+            name: "My Reviews",
             path: "/dashboard/manage-review",
-            icon: "far fa-star",
+            icon: "fas fa-star text-warning",
+            condition: !UserIsAdmin
         },
         {
             name: "Toggle Theme color",
             path: "#",
-            icon: "fas fa-tachometer-alt",
+            icon: "fas fa-tachometer-alt text-primary",
             type: 'button',
-            handler: handleTheme
+            handler: handleTheme,
+            condition: true
         },
         {
             name: "Toggle Sidebar",
             path: "#",
-            icon: "fas fa-toggle-off",
+            icon: "fas fa-toggle-off text-success",
             type: 'button',
-            handler: toggleSidebar
+            handler: toggleSidebar,
+            condition: true
         },
         {
             name: "Logout",
@@ -80,7 +110,8 @@ export default function Sidebar({ handleTheme, handleLogout, toggleSidebar }) {
             type: 'button',
             handler: handleLogout,
             icon: "fas fa-sign-out-alt",
-            hasDivider: true
+            hasDivider: true,
+            condition: true
         }
     ];
     return (
@@ -112,21 +143,31 @@ export default function Sidebar({ handleTheme, handleLogout, toggleSidebar }) {
                 </div>
             </nav>
             <div id="sidebar">
-                {routes.map((route, i) => (
-                    <Link
-                        key={i}
-                        to={route.path}
-                        className={`list-group-item bg-transparent border-0 text-white navlink 
+
+                {routes.map((route, i) => {
+                    return route.condition && (
+                        <Link
+                            key={i}
+                            to={route.path}
+                            className={`list-group-item bg-transparent border-0 text-white navlink 
                             ${isActive(route.path) && "navactive"}
                             ${route.hasDivider && "mt-md-5"}`}
-                        aria-current="true"
-                        onClick={() => route.type && route.handler()}
-                    >
-                        {/* <FontAwesomeIcon icon={route.icon} /> */}
-                        <i className={route.icon}></i>
-                        <strong className="ms-2"> {route.name} </strong>
-                    </Link>
-                ))
+                            aria-current="true"
+                            onClick={() => route.type === 'button' && route.handler()}
+                        >
+                            {
+                                route.type === 'img' && (
+                                    <>
+                                        <img src={currentUser.photoURL || '/user.png'} alt={currentUser.name} className="img-sm img-circle " />
+                                        <strong>{currentUser.name}</strong>
+                                    </>
+                                )
+                            }
+                            <i className={route.icon}></i>
+                            <strong className="ms-2"> {route.name} </strong>
+                        </Link>
+                    )
+                })
                 }
 
             </div >

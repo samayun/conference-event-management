@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthProvider";
+import { signOut } from "../firebase";
 import Sidebar from "./Sidebar";
 
 export default function DashboardLayout({ children }) {
@@ -7,14 +9,12 @@ export default function DashboardLayout({ children }) {
         color: "bg-hero2",
         sidebar: 'right'
     });
-
+    const { currentUser, setError } = useAuth();
     useEffect(() => {
-
         if (localStorage.getItem('theme')) {
             let obj = JSON.parse(localStorage.getItem('theme'));
             setThemeStoarge(obj)
             setTheme(obj);
-            console.log(obj)
         }
 
     }, []);
@@ -38,7 +38,6 @@ export default function DashboardLayout({ children }) {
             setThemeStoarge(obj);
             setTheme(obj); console.log(obj)
         }
-
     }
     const toggleSidebar = () => {
         if (theme.sidebar && theme.sidebar === "right") {
@@ -56,10 +55,19 @@ export default function DashboardLayout({ children }) {
             setThemeStoarge(obj);
             setTheme(obj); console.log(obj)
         }
-
     }
-    const handleLogout = () => {
-        alert("LOGGING OUT")
+
+
+    const handleLogout = async () => {
+        try {
+            await signOut();
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("isAdmin");
+            // No need to manually route change cz AuthContext will reset state & privateRoute will change routing
+            // history.push('/login');
+        } catch (error) {
+            setError(error.message)
+        }
     }
     return (
         <>

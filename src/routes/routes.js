@@ -5,15 +5,17 @@ const OrderList = lazy(() => import(/*webpackChunkName:'Dashboard/OrderList'*/'.
 const MakeAdmin = lazy(() => import(/*webpackChunkName:'Dashboard/MakeAdmin'*/'../pages/dashboard/make-admin.jsx'));
 const AddService = lazy(() => import(/*webpackChunkName:'Dashboard/AddService'*/'../pages/dashboard/add-service.page'));
 const ManageService = lazy(() => import(/*webpackChunkName:'Dashboard/ManageService'*/'../pages/dashboard/manage-service'));
+const CreateReview = lazy(() => import(/*webpackChunkName:'Dashboard/CreateReview'*/'../pages/dashboard/create-review.page'));
 const ManageReviews = lazy(() => import(/*webpackChunkName:'Dashboard/ManageReviews'*/'../pages/dashboard/manage-review.page'));
 
 const Home = lazy(() => import(/*webpackChunkName:'App/Home' */'../pages/Home'));
-const SpeakersPage = lazy(() => import(/*webpackChunkName:'App/SpeakersPage' */'../pages/services.page'));
+const SpeakersPage = lazy(() => import(/*webpackChunkName:'App/SpeakersPage' */'../pages/speakers.page'));
 const ServicesPage = lazy(() => import(/*webpackChunkName:'App/ServicesPage' */'../pages/services.page'));
-const Events = lazy(() => import(/*webpackChunkName:'App/Events' */'../pages/events'));
+const ServiceSinglePage = lazy(() => import(/*webpackChunkName:'App/ServiceSinglePage' */'../pages/serviceSingle.page'));
+
 const ContactPage = lazy(() => import(/*webpackChunkName:'App/ContactPage' */'../pages/contact.page'));
-const Login = lazy(() => import(/*webpackChunkName:'App/Login' */'../pages/login'));
-const Signup = lazy(() => import(/*webpackChunkName:'App/Signup' */'../pages/signup'));
+const Login = lazy(() => import(/*webpackChunkName:'App/Login' */'../pages/login.page'));
+const Signup = lazy(() => import(/*webpackChunkName:'App/Signup' */'../pages/signup.page'));
 const NotFound = lazy(() => import(/*webpackChunkName:'App/404' */'../pages/NotFound'));
 
 const routes = [
@@ -22,11 +24,12 @@ const routes = [
     { path: '/dashboard/manage-services', authorization: 'private', exact: true, component: ManageService },
     { path: '/dashboard/order-list', authorization: 'private', exact: true, component: OrderList },
     { path: '/dashboard/make-admin', authorization: 'private', exact: true, component: MakeAdmin },
+    { path: '/dashboard/create-review', authorization: 'private', exact: true, component: CreateReview },
     { path: '/dashboard/manage-review', authorization: 'private', exact: true, component: ManageReviews },
 
     { path: '/services', authorization: 'private', exact: true, component: ServicesPage },
+    { path: '/services/:serviceId', authorization: 'private', exact: true, component: ServiceSinglePage },
     { path: '/contact', exact: true, component: ContactPage },
-    { path: '/events', authorization: 'private', exact: true, component: Events },
     { path: '/speakers', authorization: 'private', exact: true, component: SpeakersPage },
     { path: '/login', exact: true, authorization: "IfAuthRedirectBack", component: Login },
     { path: '/signup', exact: true, authorization: "IfAuthRedirectBack", component: Signup },

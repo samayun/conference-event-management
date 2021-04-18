@@ -2,29 +2,51 @@ import { createContext, useContext, useState, useEffect } from "react";
 import Loading from "../pages/Loading";
 import userObject from "../utils/userObject";
 import { onAuthStateChanged, getCurrentUser } from "../firebase";
-
+import AdminDataService from '../services/admin.service';
 const AuthContext = createContext({});
 
 export const useAuth = () => (useContext(AuthContext));
 
 
 const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState({
-        // email: "admin@sobji-dokan.com",
-        // name: "Salman"
-    });
+    const [currentUser, setCurrentUser] = useState({});
+    const [UserIsAdmin, setUserIsAdmin] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const isAdmin = async email => {
+        try {
+            let admin = await AdminDataService.getSingleAdmin(email);
+            setUserIsAdmin(true);
+            console.log("ADMIN TRUE")
+            return true;
+        } catch (error) {
+            setUserIsAdmin(false)
+            console.log("ADMIN FALSE")
+            return false;
+        }
+    }
+
     const generateToken = () => {
         const User = getCurrentUser()
+        console.log(User.email)
         User.getIdToken(false).then(token => {
             sessionStorage.setItem("token", token);
             localStorage.setItem("token", token);
+            // CHECK ADMIN
+            if (isAdmin(User.email)) {
+                sessionStorage.setItem("isAdmin", true);
+                localStorage.setItem("isAdmin", true);
+            } else {
+                sessionStorage.setItem("isAdmin", false);
+                localStorage.setItem("isAdmin", false);
+            }
         })
 
     }
 
     const handleAfterSignInOutResponse = async (user) => {
+
         if (user) {
             // IF Found User Data means Authenticated 
             console.log(user.displayName)
@@ -35,11 +57,13 @@ const AuthProvider = ({ children }) => {
             setCurrentUser({});
         }
     }
+    const isAdminPrevileged = () => !!UserIsAdmin
 
     const value = {
         currentUser, setCurrentUser,
         isLoading, setLoading,
-        error, setError
+        error, setError,
+        UserIsAdmin, setUserIsAdmin, isAdminPrevileged
     }
 
     useEffect(() => {

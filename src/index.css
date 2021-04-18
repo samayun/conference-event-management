@@ -65,12 +65,54 @@ code {
 .navlink:hover strong {
   color: tomato;
 }
-.img-sm.img-circle {
+.img-sm {
   width: 3rem;
+  margin-right: 3px;
+}
+.img-md {
+  width: 8rem;
+}
+.img-circle {
   -webkit-clip-path: circle();
   clip-path: circle();
-  margin-right: 3px;
 }
 .navbar-nav {
   align-items: center;
 }
+
+.star {
+  margin-left: 3rem;
+  padding-top: 3px;
+}
+.quotes {
+  quotes: "\201c""\201d";
+  font-size: 1rem;
+  color: gray;
+}
+.quotes::before {
+  content: open-quote;
+}
+
+.quotes::after {
+  content: close-quote;
+}
+.card-body:hover {
+  background: #e6e6e6 !important;
+  box-shadow: 0px 4px 8px 0 hotpink, 0 6px 20px 0 #fff)
+  text-align: center;
+}
+.card-body {
+  position: relative !important;
+  overflow: hidden;
+}
+.card-body img {
+  opacity: 0.6 !important;
+}
+
+.card-body img:hover {
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+}
+/* footer {
+  clip-path: polygon(0 45%, 99.78% -6%, 100% 99%, 0% 100%) !important;
+} */

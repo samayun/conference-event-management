@@ -47,7 +47,7 @@ export default function Signup() {
     };
     return (
         <MainAppLayout>
-            <h2 className="text-center text-teal"> Signup </h2>
+            <h2 className="text-center"> Signup </h2>
             {error && <h6 className="text-center text-danger">  {error} </h6>}
             <form
                 onSubmit={handleSubmit(onSubmit)}

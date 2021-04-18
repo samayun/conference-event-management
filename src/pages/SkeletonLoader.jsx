@@ -34,8 +34,9 @@ function Card() {
     )
 }
 export default function SkeletonLoader() {
+    // align - items - center
     return (
-        <div class="container h-screen d-flex justify-content-center align-items-center mr-2">
+        <div class="container h-screen d-flex justify-content-center  mr-2">
             <div className="row">
                 <div className="col-md-4"><Card /></div>
                 <div className="col-md-4 d-none d-sm-block"><Card /></div>

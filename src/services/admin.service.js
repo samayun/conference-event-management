@@ -1,40 +1,45 @@
 import axios from "./axios";
 
-class Service {
+class AdminDataService {
     async getAll() {
         try {
-            let { data } = await axios.get(`/services`);
-            return data;
-        } catch (error) {
-            if (error.response && error.response.data.error) {
-                throw new Error(error.response.data.error);
-            } else {
-                throw new Error("Failed to fetch Servies");
-            }
-        }
-    }
-    async getSingleService(serviceId) {
-        try {
             const token = sessionStorage.getItem('token') || null;
-            let { data } = await axios.get(`/services/${serviceId}`, {
+            let { data } = await axios.get(`/admins`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
+
             return data;
         } catch (error) {
             if (error.response && error.response.data.error) {
                 throw new Error(error.response.data.error);
             } else {
-                throw new Error("Failed to fetch service");
+                throw new Error("Failed to add admin");
             }
         }
     }
-    async createService(serviceData) {
+    async getSingleAdmin(email) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios.get(`/admins?email=${email}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data.error) {
+                throw new Error(error.response.data.error);
+            } else {
+                throw new Error("Failed to add admin");
+            }
+        }
+    }
+    async createAdmin(adminData) {
         try {
             const token = sessionStorage.getItem('token') || null;
             let { data } = await axios({
                 method: 'post',
-                url: `/services`,
-                data: serviceData,
+                url: `/admins`,
+                data: adminData,
                 headers: {
                     'Content-Type': "application/json",
                     "Authorization": `Bearer ${token}`
@@ -45,17 +50,17 @@ class Service {
             if (error.response && error.response.data.error) {
                 throw new Error(error.response.data.error);
             } else {
-                throw new Error("Failed to add service");
+                throw new Error("Failed to add admin");
             }
         }
     }
-    async editService(productId, serviceData) {
+    async editAdmin(email, payload) {
         try {
             const token = sessionStorage.getItem('token') || null;
             let { data } = await axios({
                 method: 'put',
-                url: `/services/${productId}`,
-                data: serviceData,
+                url: `/admins?email=${email}`,
+                data: payload,
                 headers: {
                     'Content-Type': "application/json",
                     "Authorization": `Bearer ${token}`
@@ -63,27 +68,23 @@ class Service {
             });
             return data
         } catch (error) {
-            if (error.response && error.response.data.error) {
-                throw new Error(error.response.data.error);
-            } else {
-                throw new Error("Failed to update service");
-            }
+            throw new Error("Refresh your browser or login again. Service service failed");
         }
     }
 
-    async deleteService(id) {
+    async deleteAdmin(email) {
         try {
             const token = sessionStorage.getItem('token') || null;
-            let { data } = await axios.delete(`/services/${id}`, {
+            let { data } = await axios.delete(`/admins?email=${email}`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             return data;
         } catch (error) {
-            throw new Error(`error in Admin deletService`)
+            throw new Error(error.response.data.error);
         }
     }
 
 }
 
 // eslint-disable-next-line 
-export default new Service;
+export default new AdminDataService;

@@ -1,16 +1,15 @@
 import { Suspense, useEffect, useState } from "react"
-import Service from '../services/service.service';
+import SpeakerDataService from '../services/speaker.service';
 import SkeletonLoader from "../pages/SkeletonLoader";
 import Loading from "../pages/Loading";
 import { useSpring, animated as a } from 'react-spring'
 
 import { useError } from "../context/useError";
-import { Link } from "react-router-dom";
 
 
 
-export default function Services() {
-    const [services, setServices] = useState([]);
+export default function SpeakerComponent() {
+    const [speakers, setSpeakers] = useState([]);
     const { renderError } = useError();
 
     const [flipped, set] = useState(true)
@@ -24,8 +23,8 @@ export default function Services() {
     useEffect(() => {
         async function fetchData() {
             try {
-                let data = await Service.getAll()
-                setServices(data)
+                let data = await SpeakerDataService.getAll();
+                setSpeakers(data)
             } catch (error) {
                 renderError(error);
             }
@@ -39,28 +38,28 @@ export default function Services() {
 
                 <div className="container-fluid py-3  mt-5 clip bg-light animation-right fade-right">
                     <div className="container py-3">
-                        <h2 className="text-teal text-center py-3">Our Main Services</h2>
+                        <h2 className="text-teal text-center py-3">Our Speakers</h2>
 
                         <div className="row  text-center">
                             {
-                                !services.length && <SkeletonLoader />
+                                !speakers.length && <Loading />
                             }
                             {
-                                services.map(service => (
-                                    <div className="col-md-4" onClick={() => set(state => !state)}>
-
+                                speakers.length > 0 && speakers.map((speaker) => (
+                                    <div className="col-md-4"
+                                        onClick={() => set(state => !state)}>
                                         <div className="card-body bg-white m-1 shadow px-4 ">
                                             {
                                                 flipped ? <a.img
-                                                    src={service.image}
-                                                    alt={service.name}
+                                                    src={speaker.image}
+                                                    alt={speaker.name}
                                                     className="img-thumbnail"
                                                     style={{
                                                         opacity: opacity.interpolate(o => 1 - .2),
                                                         transform
                                                     }} /> : <a.img
-                                                    src={service.image}
-                                                    alt={service.name}
+                                                    src={speaker.image}
+                                                    alt={speaker.name}
                                                     className="img-thumbnail"
                                                     style={{
                                                         opacity: .3,
@@ -68,10 +67,9 @@ export default function Services() {
                                                     }}
                                                 />
                                             }
-                                            <h2 className="text-info">{service.name}</h2>
-                                            <p> Reeegistration Fee : {service.price} </p>
-                                            <p> {service.description.substr(0, 50)} </p>
-                                            <Link className="btn btn-warning" to={`/services/${service._id}`}> Book Now  </Link>
+                                            <h2 className="text-info">{speaker.name}</h2>
+                                            <p class="text-muted"> {speaker.designation} </p>
+                                            <p> {speaker.bio.substr(0, 150)} </p>
                                         </div>
                                     </div>
                                 ))

@@ -38,7 +38,7 @@ export default function Login() {
     return (
         <MainAppLayout>
             <h2 className="text-center text-teal"> Login </h2>{" "}
-            <div className="text-center">{process.env.REACT_APP_SERVER_URL}</div>
+
 
             {error && <h6 className="text-center text-danger">  {error} </h6>}
             <form

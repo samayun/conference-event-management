@@ -1,13 +1,15 @@
-<p align="center">
-      <img src="public/logo192.png" alt="conference-events"  align="center" /> </br>
+<p style="text-align:center;">
+      <img src="public/logo192.png" alt="conference-events"  style="width:150px;" /> </br>
 </p>
 
-### Live URL : https://conference-events.web.app :heart:
+### Live URL :https://conference-events.web.app :heart:
 
 ### Server URL: https://conference-events.herokuapp.com
 
+## SErver Source Code:
+
 Review this project on twitter (
-<a href="https://twitter.com/intent/tweet?text=What an application ! Wow !Check It =>  :&url=https://sobji-dokan.web.app">
+<a href="https://twitter.com/intent/tweet?text=What an application ! Wow !Check It =>  :&url=https://sobji-dokan.web.app" target="_blank">
 <img src="https://img.shields.io/twitter/url?label=Tweet+Now&logoColor=%230f0&url=https://sobji-dokan.web.app" alt="Tweet Now">
 </a>
 )
@@ -23,6 +25,11 @@ Review this project on twitter (
 - Review Company
 - User & Admin Dashboard Panel
 - User can order via Stripe
+
+# Extra Features
+
+- Rating System
+- Theme in Dashboard ( two color & left-right sidebar layout applied)
 
 # :clap: Output
 

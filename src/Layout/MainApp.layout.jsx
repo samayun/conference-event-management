@@ -10,8 +10,9 @@ export default function MainAppLayout({ children, header }) {
                     <Navbar />
                     {header}
                 </header>
-
-                {children}
+                <div className="mb-3">
+                    {children}
+                </div>
                 <Footer />
             </div>
 

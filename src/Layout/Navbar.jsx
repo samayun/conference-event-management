@@ -12,6 +12,7 @@ export default function Navbar() {
         try {
             await signOut();
             sessionStorage.removeItem("token");
+            sessionStorage.removeItem("isAdmin");
             // No need to manually route change cz AuthContext will reset state & privateRoute will change routing
             // history.push('/login');
         } catch (error) {
@@ -27,11 +28,6 @@ export default function Navbar() {
         {
             path: '/speakers',
             title: 'Speakers',
-            condition: !!currentUser.email
-        },
-        {
-            path: '/events',
-            title: 'Events',
             condition: !!currentUser.email
         },
         {
