@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import MyCheckoutForm from "../components/MyCheckoutForm.component";
 
 const DashboardPage = lazy(() => import(/*webpackChunkName:'Dashboard/DashboardPage'*/'../pages/dashboard'));
 const OrderList = lazy(() => import(/*webpackChunkName:'Dashboard/OrderList'*/'../pages/dashboard/order-list'));
@@ -29,6 +30,7 @@ const routes = [
 
     { path: '/services', authorization: 'private', exact: true, component: ServicesPage },
     { path: '/services/:serviceId', authorization: 'private', exact: true, component: ServiceSinglePage },
+    { path: '/checkout/:serviceId', authorization: 'private', exact: true, component: MyCheckoutForm },
     { path: '/contact', exact: true, component: ContactPage },
     { path: '/speakers', authorization: 'private', exact: true, component: SpeakersPage },
     { path: '/login', exact: true, authorization: "IfAuthRedirectBack", component: Login },

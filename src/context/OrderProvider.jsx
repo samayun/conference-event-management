@@ -8,13 +8,17 @@ export const useOrder = () => useContext(OrderContext);
 
 export default function OrderProvider({ children }) {
     const [orders, setOrders] = useState([]);
+    const [orderError, setOrderError] = useState();
+    const [orderSuccess, setOrderSuccess] = useState();
     const getAllOrder = () => OrderDataServices.getAll()
     const createOrder = formData => OrderDataServices.createOrder(formData)
     const deleteOrder = orderId => OrderDataServices.deleteOrder(orderId)
 
     const value = {
         orders, setOrders,
-        getAllOrder, createOrder, deleteOrder
+        getAllOrder, createOrder, deleteOrder,
+        orderError, setOrderError,
+        orderSuccess, setOrderSuccess
     }
 
     return (

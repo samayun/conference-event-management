@@ -1,11 +1,10 @@
 import { Suspense, useEffect, useState } from "react"
 import SpeakerDataService from '../services/speaker.service';
-import SkeletonLoader from "../pages/SkeletonLoader";
+
 import Loading from "../pages/Loading";
 import { useSpring, animated as a } from 'react-spring'
 
 import { useError } from "../context/useError";
-
 
 
 export default function SpeakerComponent() {

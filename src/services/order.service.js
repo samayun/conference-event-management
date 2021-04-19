@@ -10,7 +10,11 @@ class Order {
             });
             return data;
         } catch (error) {
-            throw new Error("Orders fetch error");
+            if (error.response && error.response.data.error) {
+                throw new Error(error.response.data.error);
+            } else {
+                throw new Error("Order Render failed");
+            }
         }
     }
 
@@ -18,16 +22,22 @@ class Order {
     async createOrder(orderData) {
         try {
             const token = sessionStorage.getItem('token') || null;
-            let { data } = await axios.post(`/orders`, {
+            let { data } = await axios({
+                method: 'post',
+                url: `/orders`,
                 data: orderData,
                 headers: {
                     'Content-Type': "application/json",
                     "Authorization": `Bearer ${token}`
                 }
             });
-            return data
+            return data;
         } catch (error) {
-            throw new Error(`error in Admin createOrder`);
+            if (error.response && error.response.data.error) {
+                throw new Error(error.response.data.error);
+            } else {
+                throw new Error("Order Creation failed");
+            }
         }
     }
     // ADMIN 
@@ -42,7 +52,12 @@ class Order {
             });
             return data
         } catch (error) {
-            throw new Error(`error in Admin deleteOrder`);
+            if (error.response && error.response.data.error) {
+                throw new Error(error.response.data.error);
+            } else {
+                throw new Error(`error in Admin deleteOrder`);
+            }
+
         }
     }
 

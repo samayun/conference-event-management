@@ -27,7 +27,6 @@ code {
 .float-right {
   float: right;
 }
-
 .text-teal {
   color: var(--bs-teal);
 }
@@ -44,6 +43,7 @@ code {
 }
 .bg-hero {
   background: linear-gradient(75deg, #ff3b3b, #ff00bf);
+  margin-bottom: 4rem;
 }
 .bg-hero2 {
   background: linear-gradient(75deg, #0f9, #09f);
@@ -76,6 +76,17 @@ code {
   -webkit-clip-path: circle();
   clip-path: circle();
 }
+.img-message {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 75%,
+    75% 75%,
+    75% 100%,
+    50% 75%,
+    0% 75%
+  );
+}
 .navbar-nav {
   align-items: center;
 }
@@ -97,9 +108,9 @@ code {
   content: close-quote;
 }
 .card-body:hover {
-  background: #e6e6e6 !important;
-  box-shadow: 0px 4px 8px 0 hotpink, 0 6px 20px 0 #fff)
+  background: linear-gradient(75deg, pink, hotpink) !important;
   text-align: center;
+  /* box-shadow: 0px 4px 8px 0 hotpink, 0 6px 20px 0 #fff); */
 }
 .card-body {
   position: relative !important;

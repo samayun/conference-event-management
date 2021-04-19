@@ -1,12 +1,12 @@
-<p style="text-align:center;">
-      <img src="public/logo192.png" alt="conference-events"  style="width:150px;" /> </br>
+<p align="center">
+      <img src="public/logo192.png" alt="conference-events"  width="200px" /> </br>
 </p>
 
 ### Live URL :https://conference-events.web.app :heart:
 
 ### Server URL: https://conference-events.herokuapp.com
 
-## SErver Source Code:
+## SErver Source Code: https://github.com/Porgramming-Hero-web-course/complete-website-server-samayun
 
 Review this project on twitter (
 <a href="https://twitter.com/intent/tweet?text=What an application ! Wow !Check It =>  :&url=https://sobji-dokan.web.app" target="_blank">
@@ -36,11 +36,14 @@ Review this project on twitter (
 - HomePage :
   ![Homepage ](docs/homepage.png)
 
-- Lighhouse Report :
-  ![Lighhouse Report](docs/lighthouse.png)
+- Lighthouse Report :
+  ![lighthouse Report](docs/lighthouse.png)
 
 - Project Structure :
   ![project_structure.png](docs/project_structure.png)
+- Responsive on Mobile
+
+  ![ Responsive on Mobile](docs/mobile.png)
 
 # How to run this project
 

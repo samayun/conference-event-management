@@ -69,7 +69,7 @@ export default function SpeakerPage() {
                                             </div>
                                             <h2 className="text-info">{speaker.name}</h2>
                                             <p class="text-muted"> {speaker.designation} </p>
-                                            <p> {speaker.bio.substr(0, 150)} </p>
+                                            <p> {speaker.bio} </p>
                                         </div>
                                     </div>
                                 ))

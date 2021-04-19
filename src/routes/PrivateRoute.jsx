@@ -7,7 +7,11 @@ import ENDPOINT from './endpoints';
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { currentUser } = useAuth();
   const location = useLocation();
-  let { from } = location.state || { from: { pathname: ENDPOINT.LOGIN } };
+  // let { from } = location.state || { from: { pathname: ENDPOINT.LOGIN, state: location.state } };
+  let from = {
+    pathname: ENDPOINT.LOGIN,
+    state: { from: location }
+  }
   return (
     // {
     //   pathname: from,

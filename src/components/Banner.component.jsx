@@ -14,8 +14,10 @@ export default function Banner() {
                 <h1 className="text-white">
                     Your New Dream <br /> Starts Here  </h1>
                 <p className="text-secondary">
-                    JIbon zekhane stomito hoy,
-                    sekhanei notun songram kore tike thakte hoy  </p>
+                    When life goes to downfall , you must struggle with new stamina ...
+                    You may loose,you may fall but You have to struggle <br />
+                    <i className="m-3">  - SAMAYUN CHOWDHURY</i>
+                </p>
                 <Link to="/speakers" className="btn btn-primary"> SEE SPEAKERS </Link>
             </div>
             <div

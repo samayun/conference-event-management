@@ -1,12 +1,12 @@
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
 
-import HeaderMain from '../components/Banner.component'
-import Services from '../components/Services.component'
-import MainAppLayout from '../Layout/MainApp.layout'
-import Contact from '../components/Home/Contact.component'
+import HeaderMain from '../components/Banner.component';
+import Services from '../components/Services.component';
+import MainAppLayout from '../Layout/MainApp.layout';
 import ErrorProvider from '../context/useError';
 import SpeakerComponent from '../components/Speaker.component';
-const Testimonials = lazy(() => import('../components/Testimonials.component'))
+const Testimonials = lazy(() => import('../components/Testimonials.component'));
+const Contact = lazy(() => import('../components/Home/Contact.component'));
 
 export default function Home() {
     return (
@@ -23,7 +23,9 @@ export default function Home() {
                 <SpeakerComponent />
             </ErrorProvider>
             <ErrorProvider>
-                <Contact />
+                <Suspense fallback={<h3>Loading.... Contct</h3>}>
+                    <Contact />
+                </Suspense>
             </ErrorProvider>
         </MainAppLayout>
     )

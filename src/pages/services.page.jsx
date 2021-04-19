@@ -43,7 +43,7 @@ export default function ServicesPage() {
 
                                             <img src={image} alt={name} className=" img-fluid" />
                                             <h2 className="text-info">{name}</h2>
-                                            <p> Reeegistration Fee : ${price} </p>
+                                            <p> Registration Fee : ${price} </p>
                                             <p> {description.substr(0, 50)} </p>
                                             <Link className="btn btn-warning" to={`/services/${_id}`}> Book Now  </Link>
                                         </div>

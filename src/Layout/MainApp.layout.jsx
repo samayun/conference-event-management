@@ -1,19 +1,25 @@
-import Navbar from './Navbar'
-import Footer from './Footer'
+import { Suspense, lazy } from 'react';
 import './MainApp.layout.css';
+
+const Navbar = lazy(() => import('./Navbar'))
+const Footer = lazy(() => import('./Footer'))
 
 export default function MainAppLayout({ children, header }) {
     return (
         <>
             <div className="w-100">
                 <header className={header ? 'banner-section' : 'bg-hero'}>
-                    <Navbar />
+                    <Suspense fallback={<h3>Loading Navbar... </h3>}>
+                        <Navbar />
+                    </Suspense>
                     {header}
                 </header>
-                <div className="mb-3">
+                <div className="">
                     {children}
                 </div>
-                <Footer />
+                <Suspense fallback={<h3>Loading Footer... </h3>}>
+                    <Footer />
+                </Suspense>
             </div>
 
         </>
