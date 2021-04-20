@@ -1,0 +1,28 @@
+.infoCard {
+  padding: 3rem 0px;
+  margin: 5px;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  background: linear-gradient(-75deg, #238a6d, #6bdf88);
+}
+
+.tomato {
+  background: tomato;
+}
+
+.violet {
+  background: blueviolet;
+}
+
+.crown {
+  background: crimson;
+}
+
+.brown {
+  background: brown;
+}
+
+.cyan {
+  background: rgb(7, 170, 170);
+}

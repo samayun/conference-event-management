@@ -49,8 +49,7 @@ export default function ServiceSinglePage() {
                 <div className="container py-3">
                     {name && (
                         <h2 className="text-teal text-center py-3">
-                            {" "}
-              Service Name : {name}{" "}
+                            Service Name : {name}
                         </h2>
                     )}
 
@@ -92,7 +91,7 @@ export default function ServiceSinglePage() {
                             </div>
                             <div className="col-md-7">
                                 <div className="card-body bg-white m-1 shadow px-4 ">
-                                    <h5> Registration Fee: $ {price} </h5>
+                                    <h5> Registration Fee: ৳ {price} /- </h5>
                                     <p> {description} </p>
                                 </div>
                                 <Link to={`/checkout/${_id}`} className="btn btn-success">

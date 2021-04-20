@@ -11,12 +11,13 @@ export default function OrderProvider({ children }) {
     const [orderError, setOrderError] = useState();
     const [orderSuccess, setOrderSuccess] = useState();
     const getAllOrder = () => OrderDataServices.getAll()
-    const createOrder = formData => OrderDataServices.createOrder(formData)
+    const createOrder = formData => OrderDataServices.createOrder(formData);
+    const updateOrder = (orderId, formData) => OrderDataServices.updateOrder(orderId, formData);
     const deleteOrder = orderId => OrderDataServices.deleteOrder(orderId)
 
     const value = {
         orders, setOrders,
-        getAllOrder, createOrder, deleteOrder,
+        getAllOrder, createOrder, updateOrder, deleteOrder,
         orderError, setOrderError,
         orderSuccess, setOrderSuccess
     }

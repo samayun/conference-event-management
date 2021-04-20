@@ -69,7 +69,7 @@ export default function Services() {
                                                 />
                                             }
                                             <h2 className="text-info">{service.name}</h2>
-                                            <p> Registration Fee : {service.price} </p>
+                                            <p> Registration Fee : ৳ {service.price} /-</p>
                                             <p> {service.description.substr(0, 50)} </p>
                                             <Link className="btn btn-warning" to={`/services/${service._id}`}> Book Now  </Link>
                                         </div>

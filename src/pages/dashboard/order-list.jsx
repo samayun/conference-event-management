@@ -5,10 +5,16 @@ import DashboardLayout from "../../Layout/Dashboard.layout";
 import ErrorComponent from "../ErrorComponent";
 import SkeletonLoader from "../SkeletonLoader";
 
-export default function ManageServices() {
+export default function OrderList() {
     const [data, setData] = useState({});
     const { UserIsAdmin } = useAuth();
-    const { getAllOrder, deleteOrder, orders, setOrders } = useOrder();
+    const {
+        getAllOrder,
+        updateOrder,
+        deleteOrder,
+        orders,
+        setOrders,
+    } = useOrder();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +31,24 @@ export default function ManageServices() {
         // eslint-disable-next-line
     }, []);
 
+    // UPDATE OPERATION
+    const handleChange = async (e) => {
+        const orderId = e.target.dataset.orderid;
+        const value = e.target.value;
+        try {
+            setData({ loading: true });
+            let updatedData = await updateOrder(orderId, {
+                status: value,
+            });
+            let updata = orders.find((dt) => updatedData._id === dt._id);
+            updata["status"] = updatedData.status;
+            setOrders([...orders, updata]);
+            setData({ loading: false });
+        } catch (error) {
+            setData({ error, place: "delete" });
+        }
+    };
+
     // DELETE OPERATION
     const handleDelete = async (serviceId) => {
         try {
@@ -36,10 +60,18 @@ export default function ManageServices() {
             setData({ error, place: "delete" });
         }
     };
+    const fixedStatus = {
+        position: 'absolute',
+        top: '0',
+        right: 0,
+        marginRight: '3px',
+        marginTop: '3px',
+    }
 
     return (
         <DashboardLayout>
-            <h3 className="text-teal"> Orders </h3>
+            <h3 className="text-teal"> {UserIsAdmin ? 'All Orders' : 'My Orders'} </h3>
+
             {data.loading ? (
                 <SkeletonLoader />
             ) : (
@@ -69,57 +101,99 @@ export default function ManageServices() {
 
                             {orders.length > 0 ? (
                                 orders.map(
-                                    ({ _id, paymentId, amount, payment, service, shipment, status }) => (
+                                    ({
+                                        _id,
+                                        paymentId,
+                                        amount,
+                                        payment,
+                                        service,
+                                        shipment,
+                                        status,
+                                    }) => (
                                         <tr key={paymentId}>
                                             <td>
-                                                <code>
-                                                    {paymentId}
-                                                </code></td>
-                                            <td> {service?.name} </td>
-                                            <td> <img
-                                                src={service?.image}
-                                                alt={service?.name}
-                                                className="img-md img-circle" /> </td>
-                                            {UserIsAdmin && <th scope="col">{shipment?.email}</th>}
-                                            <td>{amount}</td>
-                                            <td>{shipment?.address}</td>
-                                            <td>
-                                                {status === "pending" && (
-                                                    <button className="btn btn-outline-danger">
-                                                        {" "}
-                                                        <i className="fal fa-close"></i> Pending{" "}
-                                                    </button>
-                                                )}
-                                                {status === "paid" ||
-                                                    (status === "done" && (
-                                                        <button className="btn btn-success">
-                                                            <i className="far fa-check text-white"></i>
-                                                            Paid{" "}
-                                                        </button>
-                                                    ))}
-                                                {status === "ongoing" && (
-                                                    <button className="btn btn-info">
-                                                        <i class="fas fa-spinner"></i>
-                                                         On Going{" "}
-                                                    </button>
-                                                )}
-                                                {status === "rejected" && (
-                                                    <button className="btn btn-outline-danger">
-                                                        <i class="fas fa-times"></i> rejected{" "}
-                                                    </button>
-                                                )}
+                                                <code>{paymentId}</code>
                                             </td>
-
-                                            {UserIsAdmin && (
+                                            <td> {service?.name} </td>
+                                            <td>
+                                                {" "}
+                                                <img
+                                                    src={service?.image}
+                                                    alt={service?.name}
+                                                    className="img-md img-circle"
+                                                />{" "}
+                                            </td>
+                                            {UserIsAdmin && <th scope="col">{shipment?.email}</th>}
+                                            <td> ৳ {amount}</td>
+                                            <td>{shipment?.address}</td>
+                                            {!UserIsAdmin ? (
                                                 <td>
+                                                    {/done|paid/.test(status) && (
+                                                        <span className="badge bg-success p-2">
+                                                            <i className="far fa-check text-white"></i>
+                              Paid
+                                                        </span>
+                                                    )}
+                                                    {/pending|ongoing/.test(status) && (
+                                                        <span className="badge bg-info p-2">
+                                                            <i class="fas fa-spinner"></i>
+                              On Going
+                                                        </span>
+                                                    )}
+                                                    {/rejected/.test(status) && (
+                                                        <span className="badge bg-danger p-2">
+                                                            <i class="fas fa-times"></i> Rejected
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            ) : (
+                                                <td>
+                                                    <select
+                                                        onChange={handleChange}
+                                                        data-orderid={_id}
+                                                        className={
+                                                            /done|paid/.test(status)
+                                                                ? `btn btn-success`
+                                                                : /pending|ongoing/.test(status)
+                                                                    ? `btn btn-info`
+                                                                    : "btn btn-danger"
+                                                        }
+                                                    >
+                                                        <option
+                                                            value="done"
+                                                            selected={/done|paid/.test(status)}
+                                                        >
+                                                            {" "}
+                              DONE{" "}
+                                                        </option>
+
+                                                        <option
+                                                            value="pending"
+                                                            selected={/pending|ongoing/.test(status)}
+                                                        >
+                                                            {" "}
+                              PENDING{" "}
+                                                        </option>
+                                                        <option
+                                                            value="rejected"
+                                                            selected={/rejected/.test(status)}
+                                                        >
+                                                            {" "}
+                              Rejected{" "}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                            )}
+                                            <td>
+                                                {UserIsAdmin && (
                                                     <button
                                                         onClick={() => handleDelete(_id)}
                                                         className="btn btn-danger"
                                                     >
                                                         <i className="fas fa-trash p-2"></i>
                                                     </button>
-                                                </td>
-                                            )}
+                                                )}
+                                            </td>
                                         </tr>
                                     )
                                 )
@@ -127,7 +201,10 @@ export default function ManageServices() {
                                 <tr>
                                     <td colSpan={8}>
                                         <h3 className="text-center text-danger">
-                                            {UserIsAdmin ? `There has no orders` : `You haven't ordered any service yet`} </h3>
+                                            {UserIsAdmin
+                                                ? `There has no orders`
+                                                : `You haven't ordered any service yet`}{" "}
+                                        </h3>
                                     </td>
                                 </tr>
                             )}

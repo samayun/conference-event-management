@@ -6,7 +6,7 @@
 
 ### Server URL: https://conference-events.herokuapp.com
 
-## SErver Source Code: https://github.com/Porgramming-Hero-web-course/complete-website-server-samayun
+## Server Source Code: https://github.com/Porgramming-Hero-web-course/complete-website-server-samayun
 
 Review this project on twitter (
 <a href="https://twitter.com/intent/tweet?text=What an application ! Wow !Check It =>  :&url=https://sobji-dokan.web.app" target="_blank">
@@ -21,10 +21,10 @@ Review this project on twitter (
 
 # Features
 
-- User can register an event of available services
+- User can register for available services
 - Review Company
 - User & Admin Dashboard Panel
-- User can order via Stripe
+- User can order via Stripe Payment Gateway ( MasterCard , VISA Supported )
 
 # Extra Features
 
@@ -43,7 +43,7 @@ Review this project on twitter (
   ![project_structure.png](docs/project_structure.png)
 - Responsive on Mobile
 
-  ![ Responsive on Mobile](docs/mobile.png)
+  ![ Responsive on Mobile](docs/site.png)
 
 # How to run this project
 
@@ -53,13 +53,17 @@ Review this project on twitter (
 * If yarn is not installed yet . run command `npm install -g yarn`
 
 - `yarn` (will install all node packages [INTERNET Connection Need])
+- rename `.default.env` to `.env`
+  & give proper credentials [environment variable]
+  For assignment purpose I gave my credentials in .default.env
 - `yarn start`
 
 # Install Packages
 
 - `yarn add axios react-router react-router-dom`
-- `yarn add firebase`
+- `yarn add firebase beauty-stars"`
 - `yarn add react-hook-form dotenv react-spring config`
+- `yarn add @stripe/react-stripe-js @stripe/stripe-js`
 
 # :smile: Features (Technical)
 

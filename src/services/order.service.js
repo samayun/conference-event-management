@@ -40,6 +40,23 @@ class Order {
             }
         }
     }
+    async updateOrder(orderId, orderData) {
+        try {
+            const token = sessionStorage.getItem('token') || null;
+            let { data } = await axios({
+                method: 'put',
+                url: `/orders/${orderId}`,
+                data: orderData,
+                headers: {
+                    'Content-Type': "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return data;
+        } catch (error) {
+            throw new Error(`error in Admin createOrder`);
+        }
+    }
     // ADMIN 
     async deleteOrder(orderId) {
         try {
