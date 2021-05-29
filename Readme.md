@@ -6,7 +6,7 @@
 
 ### Server URL: https://conference-events.herokuapp.com
 
-## Server Source Code: https://github.com/Porgramming-Hero-web-course/complete-website-server-samayun
+## Server Source Code: https://github.com/samayun/conference-event-management-server
 
 Review this project on twitter (
 <a href="https://twitter.com/intent/tweet?text=What an application ! Wow !Check It =>  :&url=https://sobji-dokan.web.app" target="_blank">
